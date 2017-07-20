@@ -1,0 +1,3 @@
+name: testPlugin
+main: testPlugin.main
+version: 0.1
