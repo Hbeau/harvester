@@ -61,29 +61,39 @@ public class HarvestedBlockDAO {
         }
     }
 
-        public void deleteHarvestedBlock(int id) {
+    public void deleteHarvestedBlock(int id) {
         Connection conn = DatabaseHandler.getConnection();
         try {
             PreparedStatement pstmt = conn.prepareStatement(this.deleteStatement);
-            pstmt.setInt(1,id);
+            pstmt.setInt(1, id);
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
 
-        public String GetBlockTypeByLocation(int x,int y,int z) {
-            String select = this.selectStatement + " WHERE pos_x = ? AND pos_y = ? and pos_z = ?;";
-            Connection conn = DatabaseHandler.getConnection();
+    public boolean isBlockPresent(int x,int y,int z) {
+        String select = this.selectStatement + " WHERE pos_x = ? AND pos_y = ? AND pos_z = ?;";
+        Connection conn = DatabaseHandler.getConnection();
 
-            try {
-                PreparedStatement pstmt = conn.prepareStatement(select);
-                return pstmt.;
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
+        try {
+            PreparedStatement stmt = conn.prepareStatement(select);
+            stmt.setInt(1,x);
+            stmt.setInt(2,y);
+            stmt.setInt(3,z);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return true;
+            };
+            return false;
 
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
         }
 
     }
+
 }

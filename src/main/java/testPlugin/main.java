@@ -32,22 +32,30 @@ public class main extends JavaPlugin implements Listener{
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
+        HarvestedBlockDAO dao = new HarvestedBlockDAO();
         Block block = event.getBlock();
         String blockType = block.getType().name();
-        //event.setCancelled(true);
         Location l = block.getLocation();
-        HarvestedBlockBean harvestedBlock = new HarvestedBlockBean();
-        harvestedBlock.setBlockType(block.getType().name());
-        harvestedBlock.setPosX(l.getBlockX());
-        harvestedBlock.setPosY(l.getBlockY());
-        harvestedBlock.setPosZ(l.getBlockZ());
-        harvestedBlock.setHarvestDate((new Timestamp(System.currentTimeMillis())).getTime()+ 20);
+        Boolean blockInBase = dao.isBlockPresent(l.getBlockX(), l.getBlockY(), l.getBlockZ());
+        event.setCancelled(true);
+        if (blockInBase) {
+            getServer().broadcastMessage("deja miné");
+        } else {
+            getServer().broadcastMessage("pas encore miné");
 
-        HarvestedBlockDAO dao = new HarvestedBlockDAO();
-        dao.insert(harvestedBlock);
+            HarvestedBlockBean harvestedBlock = new HarvestedBlockBean();
+            harvestedBlock.setBlockType(blockType);
+            harvestedBlock.setPosX(l.getBlockX());
+            harvestedBlock.setPosY(l.getBlockY());
+            harvestedBlock.setPosZ(l.getBlockZ());
+            harvestedBlock.setHarvestDate((new Timestamp(System.currentTimeMillis())).getTime() + 20);
 
-        block.setType(Material.STONE);
 
+            dao.insert(harvestedBlock);
+
+            block.setType(Material.STONE);
+
+        }
     }
 
 

@@ -28,7 +28,6 @@ public class HarvestTask implements Runnable {
         List<HarvestedBlockBean> HarvestList = harvestedBlockDAO.getRegeneratedBlocks();
         World world = this.plugin.getServer().getWorld("world");
         for (HarvestedBlockBean block:HarvestList) {
-            System.out.println(block.getId());
             org.bukkit.block.Block b = world.getBlockAt(block.getPosX(),block.getPosY(),block.getPosZ());
             b.setType(Material.getMaterial(block.getBlockType()));
             harvestedBlockDAO.deleteHarvestedBlock(block.getId());
