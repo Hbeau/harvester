@@ -1,5 +1,7 @@
-package testPlugin.model;
+package testPlugin.model.sqllite;
 
+
+import testPlugin.model.sqllite.HarvestedBlockDAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

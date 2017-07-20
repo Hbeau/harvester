@@ -1,4 +1,6 @@
-package testPlugin.model;
+package testPlugin.model.sqllite;
+
+import testPlugin.model.bean.HarvestedBlockBean;
 
 import java.sql.*;
 import java.util.ArrayList;

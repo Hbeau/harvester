@@ -1,13 +1,10 @@
 package testPlugin;
 
-import jdk.nashorn.internal.ir.Block;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
-import testPlugin.model.HarvestedBlockBean;
-import testPlugin.model.HarvestedBlockDAO;
+import testPlugin.model.bean.HarvestedBlockBean;
+import testPlugin.model.sqllite.HarvestedBlockDAO;
 
 import java.util.List;
 

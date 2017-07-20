@@ -1,4 +1,4 @@
-package testPlugin.model;
+package testPlugin.model.bean;
 
 import com.google.common.primitives.UnsignedInteger;
 

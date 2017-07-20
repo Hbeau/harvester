@@ -3,17 +3,20 @@ package testPlugin;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import  org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
-import org.bukkit.scheduler.BukkitTask;
-import testPlugin.model.DatabaseHandler;
-import testPlugin.model.HarvestedBlockBean;
-import testPlugin.model.HarvestedBlockDAO;
+import testPlugin.model.bean.HarvestedBlockBean;
+import testPlugin.model.sqllite.HarvestedBlockDAO;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 public class main extends JavaPlugin implements Listener{
     @Override
@@ -34,6 +37,7 @@ public class main extends JavaPlugin implements Listener{
     public void onBlockBreak(BlockBreakEvent event) {
         HarvestedBlockDAO dao = new HarvestedBlockDAO();
         Block block = event.getBlock();
+        Player player = event.getPlayer();
         String blockType = block.getType().name();
         Location l = block.getLocation();
         Boolean blockInBase = dao.isBlockPresent(l.getBlockX(), l.getBlockY(), l.getBlockZ());
@@ -55,6 +59,17 @@ public class main extends JavaPlugin implements Listener{
 
             block.setType(Material.STONE);
 
+            ItemStack item = new ItemStack(Material.COAL);
+            ItemMeta itemMeta = item.getItemMeta();
+            itemMeta.setDisplayName("charbon noir");
+
+            List<String> lore = new ArrayList<>();
+            lore.add("charbon noir issue d'un gysement en surface");
+            lore.add("utile pour la cuisson ou la creation de torche");
+            itemMeta.setLore(lore);
+            item.setItemMeta(itemMeta);
+
+            player.getInventory().addItem(item);
         }
     }
 
